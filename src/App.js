@@ -8,7 +8,7 @@ import Details from './routes/details';
 import Header from './components/header';
 
 function App() {
-  return (<>
+  return (<div className='container'>
           <Header />
           <BrowserRouter>
             <Routes>
@@ -16,18 +16,7 @@ function App() {
               <Route path='/details/:symbol' element={<Details />} />
             </Routes>
           </BrowserRouter>
-          </>);
+          </div>);
 }
 
 export default App;
-{/*
-    <div className="App">
-      
-      
-       
-        
-          
-        
-       
-      
-    </div>*/}
