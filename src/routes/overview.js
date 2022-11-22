@@ -1,5 +1,11 @@
+import SearchBar from "../components/searchbar";
+import StockList from "../components/stock-list";
+
 function Overview(){
-    return (<div>Overview goes here...</div>)
+    return (<div>
+        <SearchBar />
+        <StockList />
+    </div>)
 }
 
 export default Overview;
