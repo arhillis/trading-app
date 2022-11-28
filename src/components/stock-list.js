@@ -4,8 +4,8 @@ import finnHub from '../apis/finhub';
 //https://finnhub.io/api/v1/quote
 
 function StockList(){
-    const [stocks, setStocks] = useState(['GOOGL', 'MSFT', 'AMZN']);
-    const [quote, setQuote] = useState(null)
+    const [symbols, setSymbols] = useState(['GOOGL', 'MSFT', 'AMZN']);
+    const [stocks, setStocks] = useState(null)
 
 
 
@@ -13,29 +13,23 @@ function StockList(){
         let isMounted = true;
         const fetchData = async () =>{
             try{
-                const response1 = await finnHub.get('/quote', {
-                    params:{
-                        symbol: 'AAPL'
+                const responses = await Promise.all(symbols.map(symbol =>{
+                    return finnHub.get('/quote', {
+                        params: {
+                            symbol: symbol
+                        }
+                    })
+                }))
+
+                const data = responses.map(response =>{
+                    return {
+                        symbol: response.config.params.symbol,
+                        data: response.data
                     }
-                });
-
-                const response2 = await finnHub.get('/quote', {
-                    params:{
-                        symbol: 'GOOGL'
-                    }
-                });
-
-                const response3 = await finnHub.get('/quote', {
-                    params:{
-                        symbol: 'GOOGL'
-                    }
-                });
-
-                Promise.all([response1, response2, response3])
-                    .then(values => console.log(values))
-
+                })
+                console.log(data[0])
                 if(isMounted){
-                    setQuote(response1.data);
+                    setStocks(data)
                 }                
             }catch(err){
                 console.log(err)
@@ -46,8 +40,39 @@ function StockList(){
 
         return () =>{ isMounted = false};
     }, [])
+    
 
-    return (<div>Stock list goes here...</div>)
+    if(!stocks) return (<div>No stocks to show...</div>)
+    return (<table className='table hover mt-5'>
+        <thead>
+            <tr>
+                <th scope='col'>Name</th>
+                <th scope='col'>Last</th>
+                <th scope='col'>Chg</th>
+                <th scope='col'>Chg%</th>
+                <th scope='col'>High</th>
+                <th scope='col'>Low</th>
+                <th scope='col'>Open</th>
+                <th scope='col'>Pclose</th>
+            </tr>
+        </thead>
+        <tbody>
+            {stocks.map(stock =>{
+                const {symbol, data: {c, d, dp, h, l, o, pc}} = stock
+                return (<tr key={symbol}>
+                            <td>{symbol}</td>
+                            <td>{c}</td>
+                            <td>{d}</td>
+                            <td>{dp}</td>
+                            <td>{h}</td>
+                            <td>{l}</td>
+                            <td>{o}</td>
+                            <td>{pc}</td>
+                        </tr>);
+            })}
+            
+        </tbody>
+    </table>)
 }
 
 export default StockList;
