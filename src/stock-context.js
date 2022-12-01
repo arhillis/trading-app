@@ -4,8 +4,13 @@ import finnHub from './apis/finhub';
 const StockContext = React.createContext();
 
 const StockProvider = ({children}) =>{
-    const DEFAULT_SYMBOLS = ['GOOGL', 'MSFT', 'AMZN'];
+    const [watchList, setWatchList] = useState(['GOOGL', 'MSFT', 'AMZN']);
     const [stocks, setStocks] = useState(null);
+
+    const addStock = (symbol) =>{
+        if(!watchList.find(sym => sym === symbol))
+            setWatchList([...watchList, symbol])
+    }
 
     const fetchStocks = async (symbols) =>{
         try{
@@ -30,12 +35,12 @@ const StockProvider = ({children}) =>{
         }
     }
 
-    useEffect(() =>{ fetchStocks(DEFAULT_SYMBOLS)}, [])
+    useEffect(() =>{fetchStocks(watchList)}, [watchList])
 
     return (<StockContext.Provider
         value={{
             stocks,
-            setStocks
+            addStock
         }}
     >
         {children}

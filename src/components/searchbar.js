@@ -1,16 +1,19 @@
 import {useState, useEffect} from 'react';
+import { useStockContext } from '../stock-context';
 import finnHub from '../apis/finhub';
 
 function SearchBar(){
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchList, setSearchList] = useState([])
+    const [searchList, setSearchList] = useState([]);
+
+    const {addStock} = useStockContext();
 
     const handleChange = (e) =>{
         setSearchTerm(e.target.value)
     }
 
     const handleClick = (stock) =>{
-        console.log(stock);
+        addStock(stock.symbol);
         setSearchTerm('')
 
     }
