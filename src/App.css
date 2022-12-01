@@ -12,3 +12,7 @@ input.form-control:focus {
     overflow-x: hidden;
     cursor: pointer;
 }
+
+.remove-stock {
+    cursor: pointer;
+}

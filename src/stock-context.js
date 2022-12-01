@@ -12,6 +12,10 @@ const StockProvider = ({children}) =>{
             setWatchList([...watchList, symbol])
     }
 
+    const removeStock = (symbol) => {
+        setWatchList(watchList.filter(sym => sym !== symbol));
+    }
+
     const fetchStocks = async (symbols) =>{
         try{
             const responses = await Promise.all(symbols.map(symbol =>{
@@ -40,7 +44,8 @@ const StockProvider = ({children}) =>{
     return (<StockContext.Provider
         value={{
             stocks,
-            addStock
+            addStock,
+            removeStock
         }}
     >
         {children}

@@ -1,8 +1,8 @@
-import { BsCaretUpFill, BsCaretDownFill } from "react-icons/bs";
+import { BsCaretUpFill, BsCaretDownFill, BsXLg } from "react-icons/bs";
 import { useStockContext } from '../stock-context';
 
 function StockList(){
-    const {stocks} = useStockContext();
+    const {stocks, removeStock} = useStockContext();
 
     const changeColor = (val) =>{
         return val > 0 ? 'success' : 'danger';
@@ -44,6 +44,11 @@ function StockList(){
                             <td>{l}</td>
                             <td>{o}</td>
                             <td>{pc}</td>
+                            <td className="text-danger">
+                                <BsXLg className="remove-stock"
+                                    onClick={() => removeStock(symbol)}
+                                />
+                            </td>
                         </tr>);
             })}
             
