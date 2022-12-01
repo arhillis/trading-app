@@ -47,14 +47,7 @@ function SearchBar(){
                     <label htmlFor="searchbar">Search</label>
                     {
                         searchList.length > 0 ?
-                            (<ul className="dropdown-menu show"
-                                style={{
-                                    height: '20rem',
-                                    overflowY: 'scroll',
-                                    overflowX: 'hidden',
-                                    cursor: 'pointer'
-                                }}
-                            >
+                            (<ul className="dropdown-menu show">
                                 {searchList.map((stock, index)=>(
                                     <li key={stock.symbol}
                                         onClick={() => handleClick(stock)}
