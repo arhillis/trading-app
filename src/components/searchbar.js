@@ -11,6 +11,7 @@ function SearchBar(){
 
     const handleClick = (stock) =>{
         console.log(stock);
+        setSearchTerm('')
 
     }
 
