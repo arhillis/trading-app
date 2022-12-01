@@ -1,12 +1,14 @@
 import {useState, useEffect} from 'react';
 import { BsCaretUpFill, BsCaretDownFill } from "react-icons/bs";
+import { useStockContext } from '../stock-context';
 import finnHub from '../apis/finhub';
-//import {fetchQuote} from '../apis/finhub';
-//https://finnhub.io/api/v1/quote
 
 function StockList(){
+    const context = useStockContext();
     const [symbols, setSymbols] = useState(['GOOGL', 'MSFT', 'AMZN']);
-    const [stocks, setStocks] = useState(null)
+    const [stocks, setStocks] = useState(null);
+
+    console.log(context);
 
     const changeColor = (val) =>{
         return val > 0 ? 'success' : 'danger';
@@ -17,6 +19,7 @@ function StockList(){
     }
 
     useEffect(() => {
+
         let isMounted = true;
         const fetchData = async () =>{
             try{
