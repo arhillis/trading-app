@@ -13,6 +13,12 @@ input.form-control:focus {
     cursor: pointer;
 }
 
+.sort-stocks {
+    font-size: 0.85rem;
+    margin-left: 0.25rem;
+}
+
+.sort-stocks,
 .remove-stock {
     cursor: pointer;
 }

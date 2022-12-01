@@ -16,6 +16,13 @@ const StockProvider = ({children}) =>{
         setWatchList(watchList.filter(sym => sym !== symbol));
     }
 
+    const sortStockList = (prop, direction) =>{
+        const sortedStocks = stocks.sort((a, b) =>{
+            return a[prop] < b[prop] ? direction : direction * -1;
+        })
+        setStocks([...sortedStocks])
+    }
+
     const fetchStocks = async (symbols) =>{
         try{
             const responses = await Promise.all(symbols.map(symbol =>{
@@ -29,7 +36,7 @@ const StockProvider = ({children}) =>{
             const data = responses.map(response =>{
                     return {
                         symbol: response.config.params.symbol,
-                        data: response.data
+                        ...response.data
                     }
             })
 
@@ -39,13 +46,14 @@ const StockProvider = ({children}) =>{
         }
     }
 
-    useEffect(() =>{fetchStocks(watchList)}, [watchList])
+    useEffect(() =>{fetchStocks(watchList)}, [watchList]);
 
     return (<StockContext.Provider
         value={{
             stocks,
             addStock,
-            removeStock
+            removeStock,
+            sortStockList
         }}
     >
         {children}
