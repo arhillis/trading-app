@@ -4,7 +4,8 @@ import finnHub from './apis/finhub';
 const StockContext = React.createContext();
 
 const StockProvider = ({children}) =>{
-    const [watchList, setWatchList] = useState(['GOOGL', 'MSFT', 'AMZN']);
+    const storedWatchList = JSON.parse(localStorage.getItem('stocks'));
+    const [watchList, setWatchList] = useState(storedWatchList || ['GOOGL', 'MSFT', 'AMZN']);
     const [stocks, setStocks] = useState(null);
 
     const addStock = (symbol) =>{
@@ -46,7 +47,16 @@ const StockProvider = ({children}) =>{
         }
     }
 
-    useEffect(() =>{fetchStocks(watchList)}, [watchList]);
+    useEffect(() =>{
+        if(watchList.length > 0){
+            fetchStocks(watchList)
+            localStorage.setItem('stocks', JSON.stringify([...watchList]))
+        }            
+        else{
+            setStocks(null)
+            localStorage.setItem('stocks', JSON.stringify([]))
+        } 
+    }, [watchList]);
 
     return (<StockContext.Provider
         value={{
