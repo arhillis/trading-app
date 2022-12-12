@@ -9,29 +9,29 @@ function Details(){
         const fetchData = async () =>{//
             try{
 
-                const DAYS_OF_THE_WEEK = {
-                    0: 'Sunday',
-                    1: 'Monday', 
-                    2: 'Tuesday',
-                    3: 'Wednesday'
-                }
+                // const DAYS_OF_THE_WEEK = {
+                //     0: 'Sunday',
+                //     1: 'Monday', 
+                //     2: 'Tuesday',
+                //     3: 'Wednesday'
+                // }
 
                 const date = new Date();
 
                 const currentTime = Math.floor(date.getTime() / 1000) 
                 const currentDayOfTheWeek = date.getDay();
-                
+                const secsInADay = 24 * 60 * 60
                 //console.log(currentTime);
 
                 let oneDayAgo;
 
                 if(currentDayOfTheWeek === 6)
-                    oneDayAgo = currentTime - 2 * 24 * 60 * 60;
+                    oneDayAgo = currentTime - 2 * secsInADay;
                 else if(currentDayOfTheWeek === 0)
-                    oneDayAgo = currentTime - 3 * 24 * 60 * 60;
-                else oneDayAgo = currentTime - 24 * 60 * 60;
+                    oneDayAgo = currentTime - 3 * secsInADay;
+                else oneDayAgo = currentTime - secsInADay;
 
-                // const secsInADay = 24 * 60 * 60* 1000;      
+                // * 1000;      
 
 
                 // /**
