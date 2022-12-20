@@ -8,45 +8,23 @@ function Details(){
     useEffect(() =>{
         const fetchData = async () =>{//
             try{
-
-                // const DAYS_OF_THE_WEEK = {
-                //     0: 'Sunday',
-                //     1: 'Monday', 
-                //     2: 'Tuesday',
-                //     3: 'Wednesday'
-                // }
-
                 const date = new Date();
 
                 const currentTime = Math.floor(date.getTime() / 1000) 
                 const currentDayOfTheWeek = date.getDay();
-                const secsInADay = 24 * 60 * 60
-                //console.log(currentTime);
+                const secsInADay = 24 * 60 * 60;
 
-                let oneDayAgo;
+                /**
+                 * If the page is loaded on a Saturday or a Sunday, set the current day to the previous 
+                 * Friday. Else, set it to the current day. Note: this program does not yet acount for
+                 * bank holidays.
+                 */
+                const oneDayAgo = currentDayOfTheWeek === 6 ? currentTime - 2 * secsInADay :
+                                currentDayOfTheWeek === 0  ? currentTime - 3 * secsInADay : 
+                                currentTime - secsInADay;
 
-                if(currentDayOfTheWeek === 6)
-                    oneDayAgo = currentTime - 2 * secsInADay;
-                else if(currentDayOfTheWeek === 0)
-                    oneDayAgo = currentTime - 3 * secsInADay;
-                else oneDayAgo = currentTime - secsInADay;
-
-                // * 1000;      
-
-
-                // /**
-                //  * If the page is loaded on a Saturday or a Sunday, set the current day to the previous 
-                //  * Friday. Else, set it to the current day. Note: this program does not yet acount for
-                //  * bank holidays.
-                //  */
-                // const  currentDay = currentDayOfTheWeek === 6 ? new Date(date - 3 * secsInADay) :
-                //                   currentDayOfTheWeek === 0 ? new Date(date - 2 * secsInADay) : date;  
-
-                // //Subtract three days if it is a Monday to get to the previous Friday.
-                // const previousDay = currentDay.getDay() === 1 ? new Date(currentDay - secsInADay * 3) : new Date(currentDay - secsInADay);
-
-                
-                // console.log(previousDay);
+                const oneWeekAgo = currentTime - 7 * secsInADay;
+                const oneYearAgo = currentTime - 365 * secsInADay;
 
                 const res = await finhub.get('/stock/candle',{
                     params: {
