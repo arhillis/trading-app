@@ -1,8 +1,10 @@
 import { BsCaretUpFill, BsCaretDownFill, BsXLg, BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
+import { useNavigate } from "react-router";
 import { useStockContext } from '../stock-context';
 
 function StockList(){
     const {stocks, removeStock, sortStockList} = useStockContext();
+    const navigate = useNavigate();
 
     const changeColor = (val) =>{
         return val > 0 ? 'success' : 'danger';
@@ -10,7 +12,11 @@ function StockList(){
 
     const changeIcon = (val) =>{
         return val > 0 ? (<BsCaretUpFill />) : (<BsCaretDownFill />)
-    }    
+    }   
+    
+    const handleSymbolClick = (symbol) =>{
+        navigate(`/details/${symbol}`)
+    }
 
     if(!stocks) return (<div>No stocks to show...</div>)
     return (<table className='table hover mt-5'>
@@ -54,7 +60,7 @@ function StockList(){
             {stocks.map(stock =>{
                 const {symbol, c, d, dp, h, l, o, pc} = stock
                 return (<tr key={symbol}>
-                            <td>{symbol}</td>
+                            <td className="symbol" onClick={() => handleSymbolClick(symbol)}>{symbol}</td>
                             <td>{c}</td>
                             <td className={`text-${changeColor(d)}`}>
                                 {d}
