@@ -19,18 +19,21 @@ function Details(){
                 //Covert a UTC date string back into a regular date to be used for getting the day of the week
                 const getDateString = date => new Date(date * 1000);
 
+                const getLastStockDay = date =>{
+                    //date.getDay()
+                    if(date.getDay() === 1)
+                        return date;
+                    return getDateString(getUTCString(date) - secsInADay);
+                }
+
                 const currentTime = getUTCString(rightNow);
                 const oneDayAgo = currentTime - secsInADay;
                 const yesterday = getDateString(oneDayAgo);
                 
-                console.log(rightNow);
-                console.log(currentTime);
+                //console.log(rightNow);
+                //console.log(currentTime);
                 console.log(yesterday);
-                
-                
-                
-                
-                
+                console.log(getLastStockDay(yesterday));
                 //const currentDayOfTheWeek = rightNow.getDay();
 
                 /**
