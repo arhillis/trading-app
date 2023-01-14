@@ -8,34 +8,56 @@ function Details(){
     useEffect(() =>{
         const fetchData = async () =>{//
             try{
-                const date = new Date();
+                const rightNow = new Date();
 
-                const currentTime = Math.floor(date.getTime() / 1000) 
-                const currentDayOfTheWeek = date.getDay();
+                //24 hours in a day, 60 minutes in an hour, and 60 seconds in a minutes
                 const secsInADay = 24 * 60 * 60;
+                
+                //Convert a regular date to a UTC string that can be used to fetch data
+                const getUTCString = date => Math.floor(date.getTime() / 1000); 
+
+                //Covert a UTC date string back into a regular date to be used for getting the day of the week
+                const getDateString = date => new Date(date * 1000);
+
+                const currentTime = getUTCString(rightNow);
+                const oneDayAgo = currentTime - secsInADay;
+                const yesterday = getDateString(oneDayAgo);
+                
+                console.log(rightNow);
+                console.log(currentTime);
+                console.log(yesterday);
+                
+                
+                
+                
+                
+                //const currentDayOfTheWeek = rightNow.getDay();
 
                 /**
                  * If the page is loaded on a Saturday or a Sunday, set the current day to the previous 
                  * Friday. Else, set it to the current day. Note: this program does not yet acount for
                  * bank holidays.
                  */
-                const oneDayAgo = currentDayOfTheWeek === 6 ? currentTime - 2 * secsInADay :
-                                currentDayOfTheWeek === 0  ? currentTime - 3 * secsInADay : 
-                                currentTime - secsInADay;
+                // const oneDayAgo = currentDayOfTheWeek === 6 ? currentTime - 2 * secsInADay :
+                //                 currentDayOfTheWeek === 0  ? currentTime - 3 * secsInADay : 
+                //                 currentTime - secsInADay;
 
-                const oneWeekAgo = currentTime - 7 * secsInADay;
-                const oneYearAgo = currentTime - 365 * secsInADay;
+                
+                //console.log((getDateString(currentTime)).getDay());
+                
+                // const oneWeekAgo = currentTime - 7 * secsInADay;
+                // const oneYearAgo = currentTime - 365 * secsInADay;
 
-                const res = await finhub.get('/stock/candle',{
-                    params: {
-                        symbol: symbol,
-                        resolution: '60',
-                        from: oneDayAgo,
-                        to: currentTime
-                    }
-                })
+                // const res = await finhub.get('/stock/candle',{
+                //     params: {
+                //         symbol: symbol,
+                //         resolution: '60',
+                //         from: oneDayAgo,
+                //         to: currentTime
+                //     }
+                // })
 
-                console.log(res)
+                // console.log(res)
 
             }catch(err){console.log(err)}
         }
