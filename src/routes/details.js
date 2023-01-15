@@ -19,11 +19,13 @@ function Details(){
                 //Covert a UTC date string back into a regular date to be used for getting the day of the week
                 const getDateString = date => new Date(date * 1000);
 
+                const getLastDay = date => getDateString(getUTCString(date) - secsInADay);
+
                 const getLastStockDay = date =>{
                     //date.getDay()
                     if(date.getDay() === 1)
                         return date;
-                    return getDateString(getUTCString(date) - secsInADay);
+                    return getLastDay(date);
                 }
 
                 const currentTime = getUTCString(rightNow);
