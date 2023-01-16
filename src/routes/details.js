@@ -22,30 +22,28 @@ function Details(){
                 const getLastDay = date => getDateString(getUTCString(date) - secsInADay);
 
                 const getLastStockDay = date =>{
-                    //date.getDay()
-                    if(date.getDay() === 1)
-                        return date;
-                    return getLastDay(date);
+                    //Goes back a day if it's a Saturday or a Sunday
+                    const dayOfTheWeek = date.getDay();
+                    const dayOfTheMonth = date.getDate();                
+                    const currentMonth = date.getMonth();
+
+                    const BANK_HOLIDAYS = {
+                        0: [16]
+                    }
+
+                    if(dayOfTheWeek === 0 || dayOfTheWeek === 6 || 
+                        (BANK_HOLIDAYS.hasOwnProperty(currentMonth) && 
+                            BANK_HOLIDAYS[currentMonth].find(day => day === dayOfTheMonth))
+                    )
+                        return getLastStockDay(getLastDay(date));                    
+                    return date;
                 }
 
                 const currentTime = getUTCString(rightNow);
                 const oneDayAgo = currentTime - secsInADay;
                 const yesterday = getDateString(oneDayAgo);
                 
-                //console.log(rightNow);
-                //console.log(currentTime);
-                console.log(yesterday);
-                console.log(getLastStockDay(yesterday));
-                //const currentDayOfTheWeek = rightNow.getDay();
-
-                /**
-                 * If the page is loaded on a Saturday or a Sunday, set the current day to the previous 
-                 * Friday. Else, set it to the current day. Note: this program does not yet acount for
-                 * bank holidays.
-                 */
-                // const oneDayAgo = currentDayOfTheWeek === 6 ? currentTime - 2 * secsInADay :
-                //                 currentDayOfTheWeek === 0  ? currentTime - 3 * secsInADay : 
-                //                 currentTime - secsInADay;
+                console.log(getLastStockDay(rightNow));
 
                 
                 //console.log((getDateString(currentTime)).getDay());
