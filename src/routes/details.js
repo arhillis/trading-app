@@ -22,15 +22,15 @@ function Details(){
                 const getLastDay = date => getDateString(getUTCString(date) - secsInADay);
 
                 const getLastStockDay = date =>{
-                    //Goes back a day if it's a Saturday or a Sunday
                     const dayOfTheWeek = date.getDay();
                     const dayOfTheMonth = date.getDate();                
                     const currentMonth = date.getMonth();
 
                     const BANK_HOLIDAYS = {
                         0: [16]
-                    }
+                    }                    
 
+                    //If it's Saturday, Sunday, or a bank holiday, recrusively call the function again. Else, return the current date
                     if(dayOfTheWeek === 0 || dayOfTheWeek === 6 || 
                         (BANK_HOLIDAYS.hasOwnProperty(currentMonth) && 
                             BANK_HOLIDAYS[currentMonth].find(day => day === dayOfTheMonth))
