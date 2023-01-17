@@ -27,7 +27,14 @@ function Details(){
                     const currentMonth = date.getMonth();
 
                     const BANK_HOLIDAYS = {
-                        0: [13, 16]
+                        0: [16],
+                        1: [20],
+                        3: [7],
+                        4: [29],
+                        6: [3, 4],
+                        8: [4],
+                        10: [23, 24],
+                        11: [25]
                     }                    
 
                     //If it's Saturday, Sunday, or a bank holiday, recrusively call the function again. Else, return the current date
