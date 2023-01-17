@@ -27,7 +27,7 @@ function Details(){
                     const currentMonth = date.getMonth();
 
                     const BANK_HOLIDAYS = {
-                        0: [16]
+                        0: [13, 16]
                     }                    
 
                     //If it's Saturday, Sunday, or a bank holiday, recrusively call the function again. Else, return the current date
@@ -39,28 +39,22 @@ function Details(){
                     return date;
                 }
 
-                const currentTime = getUTCString(rightNow);
-                const oneDayAgo = currentTime - secsInADay;
-                const yesterday = getDateString(oneDayAgo);
-                
-                console.log(getLastStockDay(rightNow));
-
-                
-                //console.log((getDateString(currentTime)).getDay());
+                const endingStockDay = getLastStockDay(rightNow);
+                const startingStockDay = getLastStockDay(getLastDay(endingStockDay));
                 
                 // const oneWeekAgo = currentTime - 7 * secsInADay;
                 // const oneYearAgo = currentTime - 365 * secsInADay;
 
-                // const res = await finhub.get('/stock/candle',{
-                //     params: {
-                //         symbol: symbol,
-                //         resolution: '60',
-                //         from: oneDayAgo,
-                //         to: currentTime
-                //     }
-                // })
+                const res = await finhub.get('/stock/candle',{
+                    params: {
+                        symbol: symbol,
+                        resolution: '60',
+                        from: getUTCString(startingStockDay),
+                        to: getUTCString(endingStockDay)
+                    }
+                })
 
-                // console.log(res)
+                console.log(res)
 
             }catch(err){console.log(err)}
         }
