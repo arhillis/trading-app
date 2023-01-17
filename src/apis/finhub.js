@@ -6,7 +6,7 @@ import axios from 'axios';
 //          .then(data => fn(data))
 //     }
 
-const TOKEN = 'cdue3rqad3ib3oqtedggcdue3rqad3ib3oqtedh0';
+const TOKEN = process.env.REACT_APP_FINNHUB_API_KEY;
 
 export default axios.create({
         baseURL: 'https://finnhub.io/api/v1',
