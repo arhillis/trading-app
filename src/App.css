@@ -19,6 +19,7 @@ input.form-control:focus {
 }
 
 .sort-stocks,
-.remove-stock {
+.remove-stock,
+td.symbol {
     cursor: pointer;
 }
