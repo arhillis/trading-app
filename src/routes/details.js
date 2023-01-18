@@ -19,7 +19,7 @@ function Details(){
     const getStartEndDates = currentDate =>{
 
 
-    const getLastStockDay = date =>{
+        const getLastStockDay = date =>{
                     const dayOfTheWeek = date.getDay();
                     const dayOfTheMonth = date.getDate();                
                     const currentMonth = date.getMonth();
@@ -61,7 +61,7 @@ function Details(){
                 const {endingStockDay, startingStockDay} = getStartEndDates(rightNow);
                 
                 const oneWeekAgo = getLastDay(rightNow, 7);
-                //const oneYearAgo = rightNow - 365 * secsInADay;
+                const oneYearAgo = getLastDay(rightNow, 365);
 
                 console.log(endingStockDay);
                 console.log(oneWeekAgo);
@@ -84,8 +84,18 @@ function Details(){
                     }
                 })
 
+                const oneYearRes = await finhub.get('/stock/candle',{
+                    params: {
+                        symbol: symbol,
+                        resolution: 'M',
+                        from: getUTCString(oneYearAgo),
+                        to: getUTCString(endingStockDay)
+                    }
+                })
+
                 console.log(oneDayRes);
                 console.log(oneWeekRes);
+                console.log(oneYearRes);
 
             }catch(err){console.log(err)}
         }
