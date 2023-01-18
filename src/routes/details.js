@@ -4,24 +4,21 @@ import finhub from "../apis/finhub";
 
 function Details(){
     const {symbol} = useParams();
-
-    useEffect(() =>{
-        const fetchData = async () =>{//
-            try{
-                const rightNow = new Date();
-
-                //24 hours in a day, 60 minutes in an hour, and 60 seconds in a minutes
-                const secsInADay = 24 * 60 * 60;
+    
+    //24 hours in a day, 60 minutes in an hour, and 60 seconds in a minutes
+    const secsInADay = 24 * 60 * 60;
                 
-                //Convert a regular date to a UTC string that can be used to fetch data
-                const getUTCString = date => Math.floor(date.getTime() / 1000); 
+    //Convert a regular date to a UTC string that can be used to fetch data
+    const getUTCString = date => Math.floor(date.getTime() / 1000); 
 
-                //Covert a UTC date string back into a regular date to be used for getting the day of the week
-                const getDateString = date => new Date(date * 1000);
+    //Covert a UTC date string back into a regular date to be used for getting the day of the week
+    const getDateString = date => new Date(date * 1000);
 
-                const getLastDay = (date, numDays = 1 )=> getDateString(getUTCString(date) - (secsInADay * numDays));
+    const getStartEndDates = currentDate =>{
 
-                const getLastStockDay = date =>{
+    const getLastDay = (date, numDays = 1 )=> getDateString(getUTCString(date) - (secsInADay * numDays));
+
+    const getLastStockDay = date =>{
                     const dayOfTheWeek = date.getDay();
                     const dayOfTheMonth = date.getDate();                
                     const currentMonth = date.getMonth();
@@ -46,8 +43,21 @@ function Details(){
                     return date;
                 }
 
-                const endingStockDay = getLastStockDay(rightNow);
+                const endingStockDay = getLastStockDay(currentDate);
                 const startingStockDay = getLastStockDay(getLastDay(endingStockDay));
+
+                return {
+                    endingStockDay, 
+                    startingStockDay
+                }
+        };
+
+    useEffect(() =>{
+        const fetchData = async () =>{//
+            try{
+                const rightNow = new Date();
+
+                const {endingStockDay, startingStockDay} = getStartEndDates(rightNow);
                 
                 // const oneWeekAgo = currentTime - 7 * secsInADay;
                 // const oneYearAgo = currentTime - 365 * secsInADay;
