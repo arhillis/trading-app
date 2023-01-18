@@ -63,9 +63,6 @@ function Details(){
                 const oneWeekAgo = getLastDay(rightNow, 7);
                 const oneYearAgo = getLastDay(rightNow, 365);
 
-                console.log(endingStockDay);
-                console.log(oneWeekAgo);
-
                 const oneDayRes = await finhub.get('/stock/candle',{
                     params: {
                         symbol: symbol,
