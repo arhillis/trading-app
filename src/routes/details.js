@@ -13,10 +13,11 @@ function Details(){
 
     //Covert a UTC date string back into a regular date to be used for getting the day of the week
     const getDateString = date => new Date(date * 1000);
+    
+    const getLastDay = (date, numDays = 1 )=> getDateString(getUTCString(date) - (secsInADay * numDays));
 
     const getStartEndDates = currentDate =>{
 
-    const getLastDay = (date, numDays = 1 )=> getDateString(getUTCString(date) - (secsInADay * numDays));
 
     const getLastStockDay = date =>{
                     const dayOfTheWeek = date.getDay();
@@ -59,10 +60,13 @@ function Details(){
 
                 const {endingStockDay, startingStockDay} = getStartEndDates(rightNow);
                 
-                // const oneWeekAgo = currentTime - 7 * secsInADay;
-                // const oneYearAgo = currentTime - 365 * secsInADay;
+                const oneWeekAgo = getLastDay(rightNow, 7);
+                //const oneYearAgo = rightNow - 365 * secsInADay;
 
-                const res = await finhub.get('/stock/candle',{
+                console.log(endingStockDay);
+                console.log(oneWeekAgo);
+
+                const oneDayRes = await finhub.get('/stock/candle',{
                     params: {
                         symbol: symbol,
                         resolution: '60',
@@ -71,7 +75,17 @@ function Details(){
                     }
                 })
 
-                console.log(res)
+                const oneWeekRes = await finhub.get('/stock/candle',{
+                    params: {
+                        symbol: symbol,
+                        resolution: 'D',
+                        from: getUTCString(oneWeekAgo),
+                        to: getUTCString(endingStockDay)
+                    }
+                })
+
+                console.log(oneDayRes);
+                console.log(oneWeekRes);
 
             }catch(err){console.log(err)}
         }
