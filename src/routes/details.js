@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import finhub from "../apis/finhub";
 
+import DetailsChart from "../components/details-chart";
+
 function Details(){
     const {symbol} = useParams();
     const [stockData, setStockData] = useState(null);
@@ -121,6 +123,7 @@ function Details(){
     return (<div>
         <h2>Details: {symbol}</h2>
         <input type='date' />
+        <DetailsChart />
     </div>)
 }
 
