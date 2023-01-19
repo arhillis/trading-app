@@ -63,33 +63,61 @@ function Details(){
                 const oneWeekAgo = getLastDay(rightNow, 7);
                 const oneYearAgo = getLastDay(rightNow, 365);
 
-                const oneDayRes = await finhub.get('/stock/candle',{
-                    params: {
-                        symbol: symbol,
-                        resolution: '60',
-                        from: getUTCString(startingStockDay),
-                        to: getUTCString(endingStockDay)
-                    }
-                })
+                // const oneDayRes = await finhub.get('/stock/candle',{
+                //     params: {
+                //         symbol: symbol,
+                //         resolution: '60',
+                //         from: getUTCString(startingStockDay),
+                //         to: getUTCString(endingStockDay)
+                //     }
+                // })
 
-                const oneWeekRes = await finhub.get('/stock/candle',{
-                    params: {
-                        symbol: symbol,
-                        resolution: 'D',
-                        from: getUTCString(oneWeekAgo),
-                        to: getUTCString(endingStockDay)
-                    }
-                })
+                // const oneWeekRes = await finhub.get('/stock/candle',{
+                //     params: {
+                //         symbol: symbol,
+                //         resolution: 'D',
+                //         from: getUTCString(oneWeekAgo),
+                //         to: getUTCString(endingStockDay)
+                //     }
+                // })
 
-                const oneYearRes = await finhub.get('/stock/candle',{
-                    params: {
-                        symbol: symbol,
-                        resolution: 'M',
-                        from: getUTCString(oneYearAgo),
-                        to: getUTCString(endingStockDay)
-                    }
-                })
+                // const oneYearRes = await finhub.get('/stock/candle',{
+                //     params: {
+                //         symbol: symbol,
+                //         resolution: 'M',
+                //         from: getUTCString(oneYearAgo),
+                //         to: getUTCString(endingStockDay)
+                //     }
+                // })
 
+                const responses = await Promise.all([
+                    finhub.get('/stock/candle',{
+                        params: {
+                            symbol: symbol,
+                            resolution: '60',
+                            from: getUTCString(startingStockDay),
+                            to: getUTCString(endingStockDay)
+                        }
+                    }),
+                    finhub.get('/stock/candle',{
+                        params: {
+                            symbol: symbol,
+                            resolution: 'D',
+                            from: getUTCString(oneWeekAgo),
+                            to: getUTCString(endingStockDay)
+                        }
+                    }),
+                    finhub.get('/stock/candle',{
+                        params: {
+                            symbol: symbol,
+                            resolution: 'M',
+                            from: getUTCString(oneYearAgo),
+                            to: getUTCString(endingStockDay)
+                        }
+                    })
+                ])
+
+                const [oneDayRes, oneWeekRes, oneYearRes] = responses.map(res => res.data);
                 console.log(oneDayRes);
                 console.log(oneWeekRes);
                 console.log(oneYearRes);
