@@ -51,7 +51,20 @@ function Details(){
                 }
     };
 
-    
+    const formatData = arr =>{
+        const {c, h, l, o, t, v} = arr;
+
+        return c.map((val, index) =>{
+                    return {
+                        c: val,
+                        h: h[index],
+                        l: l[index],
+                        o: o[index],
+                        t: t[index],
+                        v: v[index]
+                    }
+                })
+    }
 
     useEffect(() =>{
         const fetchData = async () =>{//
@@ -91,21 +104,9 @@ function Details(){
                 ])
 
                 const [oneDayRes] = responses.map(res => res.data);//, oneWeekRes, oneYearRes
-
-                const {c, h, l, o, t, v} = oneDayRes;
-
-                const oneDayData = c.map((val, index) =>{
-                    return {
-                        c: val,
-                        h: h[index],
-                        l: l[index],
-                        o: o[index],
-                        t: t[index],
-                        v: v[index]
-                    }
-                })
+                
                 console.log(oneDayRes);
-                console.log(oneDayData);
+                console.log(formatData(oneDayRes));
                 //console.log(oneWeekRes);
                 //console.log(oneYearRes);
 
