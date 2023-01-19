@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import finhub from "../apis/finhub";
 
 function Details(){
     const {symbol} = useParams();
+    const [stockData, setStockData] = useState(null);
     
     //24 hours in a day, 60 minutes in an hour, and 60 seconds in a minutes
     const secsInADay = 24 * 60 * 60;
@@ -103,18 +104,20 @@ function Details(){
                     })
                 ])
 
-                const [oneDayRes] = responses.map(res => res.data);//, oneWeekRes, oneYearRes
-                
-                console.log(oneDayRes);
-                console.log(formatData(oneDayRes));
-                //console.log(oneWeekRes);
-                //console.log(oneYearRes);
+                const [oneDayRes, oneWeekRes, oneYearRes] = responses.map(res => res.data);
+
+                setStockData({
+                    oneDay: formatData(oneDayRes),
+                    oneWeek: formatData(oneWeekRes),
+                    oneYear: formatData(oneYearRes)
+                })
 
             }catch(err){console.log(err)}
         }
 
         fetchData();
     }, [])
+    console.log(stockData);
     return (<div>
         <h2>Details: {symbol}</h2>
         <input type='date' />
