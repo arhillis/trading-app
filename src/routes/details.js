@@ -57,14 +57,10 @@ function Details(){
     const formatData = arr =>{
         const {c, h, l, o, t, v} = arr;
 
-        return c.map((val, index) =>{
+        return t.map((val, index) =>{
                     return {
-                        c: val,
-                        h: h[index],
-                        l: l[index],
-                        o: o[index],
-                        t: t[index],
-                        v: v[index]
+                        x: val * 1000,
+                        y: Math.floor(c[index])
                     }
                 })
     }
