@@ -119,11 +119,14 @@ function Details(){
 
         fetchData();
     }, [])
-    console.log(stockData);
     return (<div>
         <h2>Details: {symbol}</h2>
-        <input type='date' />
-        <DetailsChart />
+        {stockData ? (
+            <DetailsChart stockData={stockData} symbol={symbol}/>
+        ) : (
+            <div>No data to show...</div>
+        )}
+        
     </div>)
 }
 
