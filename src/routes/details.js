@@ -118,7 +118,6 @@ function Details(){
     }, []);
 
     return (<div>
-        <h2>Details: {symbol}</h2>
         <div className="btn-group" role="group" aria-label="Basic example">
             <button type="button" 
                     className={timeInterval === 'oneDay' 
