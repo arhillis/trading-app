@@ -23,3 +23,11 @@ input.form-control:focus {
 td.symbol {
     cursor: pointer;
 }
+
+.remove-stock {
+    visibility: hidden;
+}
+
+tr:hover .remove-stock {
+    visibility: visible;
+}
