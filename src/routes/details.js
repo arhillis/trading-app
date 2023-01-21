@@ -7,6 +7,7 @@ import DetailsChart from "../components/details-chart";
 function Details(){
     const {symbol} = useParams();
     const [stockData, setStockData] = useState(null);
+    const [timeInterval, setTimeInterval] = useState('oneDay');
     
     //24 hours in a day, 60 minutes in an hour, and 60 seconds in a minutes
     const secsInADay = 24 * 60 * 60;
@@ -114,11 +115,38 @@ function Details(){
         }
 
         fetchData();
-    }, [])
+    }, []);
+
     return (<div>
         <h2>Details: {symbol}</h2>
+        <div className="btn-group" role="group" aria-label="Basic example">
+            <button type="button" 
+                    className={timeInterval === 'oneDay' 
+                        ? "btn btn-primary btn-sm active" : 
+                        "btn btn-outline-primary btn-sm"}
+                    onClick={() => setTimeInterval('oneDay')}
+            >
+                One Day
+            </button>
+            <button type="button" 
+                    className={timeInterval === 'oneWeek' 
+                        ? "btn btn-primary btn-sm active" : 
+                        "btn btn-outline-primary btn-sm"}
+                    onClick={() => setTimeInterval('oneWeek')}
+            >
+                One Week
+            </button>
+            <button type="button" 
+                    className={timeInterval === 'oneYear' 
+                        ? "btn btn-primary btn-sm active" : 
+                        "btn btn-outline-primary btn-sm"}
+                    onClick={() => setTimeInterval('oneYear')}
+            >
+                One Year
+            </button>
+        </div>
         {stockData ? (
-            <DetailsChart stockData={stockData} symbol={symbol}/>
+            <DetailsChart stockData={stockData[timeInterval]} symbol={symbol}/>
         ) : (
             <div>No data to show...</div>
         )}
