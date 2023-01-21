@@ -2,13 +2,11 @@ import React from 'react';
 import Chart from "react-apexcharts";
 
 export default function DetailsChart({stockData, symbol}) {
-    const {oneDay, oneWeek, oneYear} = stockData;
-
-    console.log(oneDay);
-
-    //console.log(stockData);
+    console.log(stockData);
+    const color = stockData[0].y < stockData[stockData.length -1].y ? "#26C281" : "#ed3419";
 
     const options = {
+        colors: [color],
         title: {
             text: symbol,
             align: "center",
@@ -41,7 +39,7 @@ export default function DetailsChart({stockData, symbol}) {
     const series = [
         {
           name: symbol,
-          data: oneDay
+          data: stockData
         }
       ];
     return (
