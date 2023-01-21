@@ -2,7 +2,6 @@ import React from 'react';
 import Chart from "react-apexcharts";
 
 export default function DetailsChart({stockData, symbol}) {
-    console.log(stockData);
     const color = stockData[0].y < stockData[stockData.length -1].y ? "#26C281" : "#ed3419";
 
     const options = {
