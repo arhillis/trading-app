@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import finhub from "../apis/finhub";
 
 import DetailsChart from "../components/details-chart";
+import StockInfo from "../components/stock-info";
 
 function Details(){
     const {symbol} = useParams();
@@ -118,7 +119,8 @@ function Details(){
     }, []);
 
     return (<div>
-        <div className="btn-group" role="group" aria-label="Basic example">
+        <StockInfo symbol={symbol}/>
+        <div className="btn-group mt-3" role="group" aria-label="Basic example">
             <button type="button" 
                     className={timeInterval === 'oneDay' 
                         ? "btn btn-primary btn-sm active" : 
